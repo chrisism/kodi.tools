@@ -67,3 +67,4 @@ stages:
       - script: |
           python -m twine upload -r akl_libs --config-file $(PYPIRC_PATH) dist/*.whl
         displayName: Upload python package
+        condition: and(succeeded(), eq(${{variables.isMaster}}, true))
