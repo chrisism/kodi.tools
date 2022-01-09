@@ -37,6 +37,11 @@ def main():
         packer_src_files     = os.getenv('PACKER_FILES_SRC')
         packer_dst_files     = os.getenv('PACKER_FILES_DEST')
 
+        print('Applying arguments:')
+        print(f'PWD:               {working_directory}')
+        print(f'PACKER_FILES_SRC:  {packer_src_files}')
+        print(f'PACKER_FILES_DEST: {packer_dst_files}')
+
         if not working_directory.endswith(os.path.sep):
             working_directory = f'{working_directory}{os.path.sep}'
 

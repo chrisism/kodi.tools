@@ -86,7 +86,13 @@ def main():
         
         if not working_directory.endswith(os.path.sep):
             working_directory = f'{working_directory}{os.path.sep}'
-            
+
+        print('Applying arguments:')
+        print(f'PWD:            {working_directory}')
+        print(f'ADDON_NAME:     {addon_name}')
+        print(f'ADDON_SRCPATHS: {source_paths_str}')
+        print(f'ADDON_KODI_DIR: {kodi_addon_directory}')
+
         publish(addon_name, working_directory, source_paths_str, kodi_addon_directory)
     except Exception as ex:
         logger.fatal('Exception in tool', exc_info=ex)
