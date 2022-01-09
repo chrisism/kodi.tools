@@ -1,0 +1,69 @@
+# Azure Devops Pipeline definition
+# 
+# Needed extensions:
+# - GitTools / GitVersion
+# - RegEx Match & Replace
+#
+trigger:
+- main
+- release/*
+- dev
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  isMaster: or(${{eq(variables['Build.SourceBranch'], 'refs/heads/master-fork')}},${{eq(variables['Build.SourceBranch'], 'refs/heads/main')}})
+  isReleaseCandidate: ${{startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')}}
+  isHotfix: ${{startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix/')}}
+  isDev: ${{eq(variables['Build.SourceBranch'], 'refs/heads/dev')}}
+  workingDirectory: '$(Build.SourcesDirectory)'
+ 
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+    - job: build
+      displayName: build
+        
+      steps:
+      - task: gitversion/setup@0
+        displayName: 'Install GitTools'
+        inputs:
+          versionSpec: '5.3.x'
+
+      - task: gitversion/execute@0
+        displayName: 'Executing gitversion'
+
+      - script: |
+            echo '##vso[task.setvariable variable=packageVersion]$(GitVersion.LegacySemVer)
+            echo '##vso[task.setvariable variable=projectVersion]$(GitVersion.Major).$(GitVersion.Minor).$(GitVersion.Patch)
+        displayName: 'Setting version variables'
+        condition: not(eq(${{variables.isMaster}}, true))
+        
+      - script: |
+            echo '##vso[task.setvariable variable=packageVersion]$(GitVersion.Major).$(GitVersion.Minor).$(GitVersion.Patch)
+            echo '##vso[task.setvariable variable=projectVersion]$(GitVersion.Major).$(GitVersion.Minor).$(GitVersion.Patch)
+        displayName: 'Setting version variables'
+        condition: eq(${{variables.isMaster}}, true)
+
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.x'
+
+      - bash: |
+          python -m pip install -upgrade pip
+          pip install -r requirements.txt
+        displayName: pip install 
+
+      - task: TwineAuthenticate@1
+        displayName: Twine Authenticate
+        inputs:
+          artifactFeed: AKL/akl_libs  
+
+      - script: |
+          python setup.py bdist_wheel --version=$(projectVersion)
+        displayName: Build python package          
+
+      - script: |
+          python -m twine upload -r akl_libs --config-file $(PYPIRC_PATH) dist/*.whl
+        displayName: Upload python package
