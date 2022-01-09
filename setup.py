@@ -42,9 +42,9 @@ setup(
     python_requires=">=3.6",
     entry_points = '''
         [console_scripts]
-        publish=publish:main
-        pack=package:main
-        update_addon_news=update_news:main
-        merge_addon_xml=addon_xml_merger:main
+        publish-addon=publish:main
+        pack-addon=package:main
+        update-addon-news=update_news:main
+        merge-addon-xml=addon_xml_merger:main
     '''
 )
