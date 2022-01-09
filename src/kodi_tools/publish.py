@@ -76,7 +76,7 @@ def _get_files_for_addon(working_directory:str, source_paths:typing.List[str]) -
     
     return source_files
 
-if __name__ == '__main__':
+def main():
     try:
         working_directory    = os.getenv('PWD')
         addon_name           = os.getenv('ADDON_NAME')
@@ -90,3 +90,6 @@ if __name__ == '__main__':
         publish(addon_name, working_directory, source_paths_str, kodi_addon_directory)
     except Exception as ex:
         logger.fatal('Exception in tool', exc_info=ex)
+
+if __name__ == '__main__':
+    main()

@@ -14,6 +14,9 @@ def update_news(addon_file:str, changelog_file:str):
     with open(addon_file, 'w') as f:
         f.write(addon_xml)
 
-if __name__ == '__main__':
+def main():
     addon_file = sys.argv[1]
     changelog_file = sys.argv[2]
+
+if __name__ == '__main__':
+    main()

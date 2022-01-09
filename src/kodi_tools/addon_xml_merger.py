@@ -14,7 +14,10 @@ def merge_xml(addon_name:str, file_source:str, file_dest:str):
     addons.append(addon_in)
     addons_xml.write(file_dest)
 
-if __name__ == '__main__':
+def main():
     addon_name = sys.argv[1]
     file_combined = sys.argv[2]
     file_source = sys.argv[3]
+
+if __name__ == '__main__':
+    main()
