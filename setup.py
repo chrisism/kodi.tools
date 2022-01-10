@@ -6,7 +6,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 VERSION = '1.0.0'
-NAME = 'kodi.tools'
+NAME = 'kodi-tools'
 AUTHOR = 'chrisism'
 AUTHOR_EMAIL = 'crizizz@gmail.com'
 DESCRIPTION = 'Set of kodi addon build tools'
