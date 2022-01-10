@@ -42,9 +42,9 @@ setup(
     python_requires=">=3.6",
     entry_points = '''
         [console_scripts]
-        publish-addon=kodi_tools.publish:main
-        pack-addon=kodi_tools.package:main
-        update-addon-news=kodi_tools.update_news:main
-        merge-addon-xml=kodi_tools.addon_xml_merger:main
+        publish_addon=kodi_tools.publish:main
+        pack_addon=kodi_tools.package:main
+        update_addon_news=kodi_tools.update_news:main
+        merge_addon_xml=kodi_tools.addon_xml_merger:main
     '''
 )
