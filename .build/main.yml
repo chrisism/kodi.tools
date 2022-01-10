@@ -2,7 +2,6 @@
 # 
 # Needed extensions:
 # - GitTools / GitVersion
-# - RegEx Match & Replace
 #
 trigger:
 - main
@@ -61,10 +60,10 @@ stages:
           artifactFeed: AKL/akl_libs  
 
       - script: |
-          python setup.py bdist_wheel --version=$(projectVersion)
+          python setup.py bdist_wheel --version=$(packageVersion)
         displayName: Build python package          
 
       - script: |
           python -m twine upload -r akl_libs --config-file $(PYPIRC_PATH) dist/*.whl
         displayName: Upload python package
-        condition: and(succeeded(), eq(${{variables.isMaster}}, true))
+        condition: and(succeeded(),or(eq(${{variables.isMaster}}, true), eq(${{variables.isReleaseCandidate}}, true)))
