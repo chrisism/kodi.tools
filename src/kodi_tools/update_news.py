@@ -33,9 +33,11 @@ def get_changelog_from_markdown_file(changelog_file:str) -> str:
     changelog_md = re.sub(r'\*\*([^\*\n]*)?\*\*', r'[B]\1[/B]', changelog_md)
     changelog_md = re.sub(r'\*(.*)?\*', r'[I]\1[/I]', changelog_md)
     changelog_md = re.sub(r'~~(.*)?~~', r'[COLOR red]\1[/COLOR]', changelog_md)
-    changelog_md = re.sub(r'\n([\*|-])', r'[CR]\1', changelog_md)
-    
+    changelog_md = re.sub(r'\s\s\n', r'[CR]', changelog_md)
     changelog_md = changelog_md.replace('\n\n', '[CR]')
+    changelog_md = re.sub(r'\n([\*|-])', r'[CR]\1', changelog_md)
+    changelog_md = changelog_md.replace('\w\n\w', '[CR]')
+
     changelog_md = changelog_md.replace('\n', '')
     return changelog_md
 

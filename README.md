@@ -29,7 +29,8 @@ pack_addon
 ```bash
 update_addon__news
 ```
-Updates the news element in the addon xml with a changelog txt file.
+Updates the news element in the addon xml with a changelog txt file or markdown file.  
+Will try to change the markdown syntax to kodi specific markup.
 
 ### Merge addon xml into addons xml
 ```bash
