@@ -88,7 +88,7 @@ def main():
         if not working_directory.endswith(os.path.sep):
             working_directory = f'{working_directory}{os.path.sep}'
 
-        if working_dir_overwrite and not not working_dir_overwrite.endswith(os.path.sep):
+        if working_dir_overwrite and not working_dir_overwrite.endswith(os.path.sep):
             working_dir_overwrite = f'{working_dir_overwrite}{os.path.sep}'
 
         print('Applying arguments:')
