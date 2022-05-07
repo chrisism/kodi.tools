@@ -79,6 +79,7 @@ def _get_files_for_addon(working_directory:str, source_paths:typing.List[str]) -
 def main():
     try:
         working_directory    = os.getenv('PWD')
+        working_dir_overwrite= os.getenv('PWD_OVERWRITE')
         addon_name           = os.getenv('ADDON_NAME')
 
         source_paths_str     = os.getenv('ADDON_SRCPATHS')
@@ -87,11 +88,18 @@ def main():
         if not working_directory.endswith(os.path.sep):
             working_directory = f'{working_directory}{os.path.sep}'
 
+        if working_dir_overwrite and not not working_dir_overwrite.endswith(os.path.sep):
+            working_dir_overwrite = f'{working_dir_overwrite}{os.path.sep}'
+
         print('Applying arguments:')
         print(f'PWD:            {working_directory}')
+        print(f'PWD_OVERWRITE:  {working_dir_overwrite}')
         print(f'ADDON_NAME:     {addon_name}')
         print(f'ADDON_SRCPATHS: {source_paths_str}')
         print(f'ADDON_KODI_DIR: {kodi_addon_directory}')
+
+        if working_dir_overwrite:
+            working_directory = working_dir_overwrite
 
         publish(addon_name, working_directory, source_paths_str, kodi_addon_directory)
     except Exception as ex:
