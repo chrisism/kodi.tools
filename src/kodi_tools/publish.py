@@ -18,12 +18,11 @@
 from __future__ import unicode_literals
 from __future__ import division
 
-import os, sys
+import os
 import glob
 import typing
 import shutil
 import logging
-import subprocess
 
 logger = logging.getLogger(__name__)
 def publish(addon_name: str, working_directory: str, source_paths_str:str, kodi_addon_directory:str):
@@ -52,8 +51,11 @@ def publish(addon_name: str, working_directory: str, source_paths_str:str, kodi_
         parent_dir = os.path.dirname(dest_file)
         if not os.path.exists(parent_dir):
             os.makedirs(parent_dir)
-                    
-        shutil.copy(source_file, dest_file)
+
+        try:            
+            shutil.copy(source_file, dest_file)
+        except IsADirectoryError:
+            print(f"Skipping. Seems to be a directory: {source_file}")
 
 def _get_files_for_addon(working_directory:str, source_paths:typing.List[str]) -> typing.List[str]:     
     source_files = []
