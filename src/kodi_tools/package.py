@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 from __future__ import division
 
 import os
+import sys
 import logging
 import subprocess
 
@@ -32,10 +33,19 @@ def pack(working_directory: str, packer_src_files: str, packer_dst_files:str):
 
 def main():
     try:
+        packer_src_files = None
+        packer_dst_files = None
+
+        if len(sys.argv) > 2:
+            packer_src_files = sys.argv[1]
+            packer_dst_files = sys.argv[2]
+
         working_directory    = os.getenv('PWD')
         
-        packer_src_files     = os.getenv('PACKER_FILES_SRC')
-        packer_dst_files     = os.getenv('PACKER_FILES_DEST')
+        if not packer_src_files:
+            packer_src_files = os.getenv('PACKER_FILES_SRC')
+        if not packer_dst_files:
+            packer_dst_files = os.getenv('PACKER_FILES_DEST')
 
         print('Applying arguments:')
         print(f'PWD:               {working_directory}')
